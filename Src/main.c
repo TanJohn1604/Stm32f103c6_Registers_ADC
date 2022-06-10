@@ -21,6 +21,7 @@
 #include "RccTimerConfig.h"
 #include "adc.h"
 #include "adc_interr.h"
+#include "adc_watchdog.h"
 
 volatile uint16_t a=0;
 int main(void)
@@ -32,40 +33,53 @@ int main(void)
 	//bật ADC
 	ADC_Enable();
 	//Cấu hình và chạy ADC với channel 1
-	ADC_Start(4);
-	//Cấu hình interrup cho ADC1_2 , là channel 1 2 4 cũng vậy, chắc là phải analog đơn nhỉ?
-	ADC_Interr();
-
+	ADC_Start(1);
+	//Cấu hình interrup cho ADC1_2 , là channel 0 1 4 cũng vậy, chắc là phải analog đơn nhỉ?
+//	ADC_Interr();
+	//Cấu hình wachdog
+	ADC_Wachdog();
 
 	GPIOC->ODR &=~GPIO_ODR_ODR13;
     /* Loop forever */
 	while(1){
 
+
 		if(a==1){
 			GPIOC->ODR |=GPIO_ODR_ODR13;
-
-		}
-		else{
+			delay_ms(1000);
+			a=0;
 			GPIOC->ODR &=~GPIO_ODR_ODR13;
 		}
-		ADC1->CR1 |=0X20;
 
+
+
+		ADC1->CR1 |=ADC_CR1_AWDIE;
 
 
 
 	}
 }
 
+//void ADC1_2_IRQHandler(){
+//	ADC1->CR1 &=~0X20;
+//	if(ADC_GetVal() >3500){
+//		a=1;
+//	}
+//	else{
+//		a=0;
+//	}
+//
+//}
+
+// HÀM NGẮT CỦA WATCH DOG
 void ADC1_2_IRQHandler(){
-	ADC1->CR1 &=~0X20;
-	if(ADC_GetVal() >3500){
-		a=1;
-	}
-	else{
-		a=0;
-	}
+//tắt interrupt wachdog. nếu không nó sẽ nhảy vào hàm này liên tục,
+//vì tốc độ đọc analog nhanh
+ADC1->CR1 &=~ADC_CR1_AWDIE;
+//xóa bit trạng thái watch đog
+ADC1->SR &=~ ADC_SR_AWD;
 
-
+a = 1;
 }
 
 

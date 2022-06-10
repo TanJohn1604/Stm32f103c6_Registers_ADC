@@ -1,6 +1,7 @@
 "./Inc/RccTimerConfig.o"
 "./Inc/adc.o"
 "./Inc/adc_interr.o"
+"./Inc/adc_watchdog.o"
 "./Src/main.o"
 "./Src/syscalls.o"
 "./Src/sysmem.o"

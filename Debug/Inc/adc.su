@@ -1,6 +1,6 @@
 adc.c:9:6:ADC_Init	4	static
-adc.c:45:6:ADC_Enable	16	static
-adc.c:52:6:ADC_Start	16	static
-adc.c:60:6:ADC_WaitForConv	4	static
-adc.c:63:10:ADC_GetVal	4	static
-adc.c:67:6:ADC_Disable	4	static
+adc.c:44:6:ADC_Enable	16	static
+adc.c:51:6:ADC_Start	16	static
+adc.c:59:6:ADC_WaitForConv	4	static
+adc.c:62:10:ADC_GetVal	4	static
+adc.c:66:6:ADC_Disable	4	static

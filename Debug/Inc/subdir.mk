@@ -7,17 +7,20 @@
 C_SRCS += \
 ../Inc/RccTimerConfig.c \
 ../Inc/adc.c \
-../Inc/adc_interr.c 
+../Inc/adc_interr.c \
+../Inc/adc_watchdog.c 
 
 OBJS += \
 ./Inc/RccTimerConfig.o \
 ./Inc/adc.o \
-./Inc/adc_interr.o 
+./Inc/adc_interr.o \
+./Inc/adc_watchdog.o 
 
 C_DEPS += \
 ./Inc/RccTimerConfig.d \
 ./Inc/adc.d \
-./Inc/adc_interr.d 
+./Inc/adc_interr.d \
+./Inc/adc_watchdog.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -27,7 +30,7 @@ Inc/%.o: ../Inc/%.c Inc/subdir.mk
 clean: clean-Inc
 
 clean-Inc:
-	-$(RM) ./Inc/RccTimerConfig.d ./Inc/RccTimerConfig.o ./Inc/adc.d ./Inc/adc.o ./Inc/adc_interr.d ./Inc/adc_interr.o
+	-$(RM) ./Inc/RccTimerConfig.d ./Inc/RccTimerConfig.o ./Inc/adc.d ./Inc/adc.o ./Inc/adc_interr.d ./Inc/adc_interr.o ./Inc/adc_watchdog.d ./Inc/adc_watchdog.o
 
 .PHONY: clean-Inc
 

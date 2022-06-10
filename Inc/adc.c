@@ -17,8 +17,7 @@ void ADC_Init(void){
 	RCC->CFGR &= ~RCC_CFGR_ADCPRE_0;
 	RCC->CFGR &= ~RCC_CFGR_ADCPRE_1;
 
-	//Interrupt enable for EOC
-	ADC1->CR1|=ADC_CR1_EOCIE;
+
 	// enable scan mode
 	ADC1->CR1|= ADC_CR1_SCAN;
 	//12 bit data align right
