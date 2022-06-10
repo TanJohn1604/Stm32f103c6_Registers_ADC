@@ -20,22 +20,52 @@
 #include"stm32f1xx.h"
 #include "RccTimerConfig.h"
 #include "adc.h"
+#include "adc_interr.h"
+
+volatile uint16_t a=0;
 int main(void)
 {
-	uint16_t ADC_VAL =0;
+	//bật cấu hình clock
 	config();
+	//cấu hình ADC có chỉnh a0 a1 a4 thành analog
 	ADC_Init();
+	//bật ADC
 	ADC_Enable();
+	//Cấu hình và chạy ADC với channel 1
+	ADC_Start(4);
+	//Cấu hình interrup cho ADC1_2 , là channel 1 2 4 cũng vậy, chắc là phải analog đơn nhỉ?
+	ADC_Interr();
+
+
+	GPIOC->ODR &=~GPIO_ODR_ODR13;
     /* Loop forever */
 	while(1){
-		ADC_Start(1);
-		ADC_WaitForConv();
-		ADC_VAL=ADC_GetVal();
-		if(ADC_VAL<2000){
+
+		if(a==1){
 			GPIOC->ODR |=GPIO_ODR_ODR13;
+
 		}
 		else{
 			GPIOC->ODR &=~GPIO_ODR_ODR13;
 		}
+		ADC1->CR1 |=0X20;
+
+
+
+
 	}
 }
+
+void ADC1_2_IRQHandler(){
+	ADC1->CR1 &=~0X20;
+	if(ADC_GetVal() >3500){
+		a=1;
+	}
+	else{
+		a=0;
+	}
+
+
+}
+
+

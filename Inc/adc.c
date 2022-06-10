@@ -31,7 +31,7 @@ void ADC_Init(void){
 	ADC1->SQR1&=~ ADC_SQR1_L;
 	//bat pa0 thanh analog in
 
-
+	//cấu hình các pin thành analog
 	GPIOA->CRL &=~ GPIO_CRL_CNF0;
 	GPIOA->CRL&= ~GPIO_CRL_MODE0;
 
